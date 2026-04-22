@@ -11,4 +11,11 @@ router.post('/automation/:id', (req, res) => {
   res.json({ success: true });
 });
 
+router.post('/stripe', express.raw({ type: 'application/json' }), (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  console.log('Stripe webhook received!');
+  // Logic to handle subscription events goes here
+  res.json({ received: true });
+});
+
 module.exports = router;

@@ -15,7 +15,13 @@ const supabase = createClient(
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use((req, res, next) => {
+  if (req.originalUrl === '/api/webhook/stripe') {
+    next();
+  } else {
+    bodyParser.json()(req, res, next);
+  }
+});
 
 // Make supabase available to routes
 app.use((req, res, next) => {
