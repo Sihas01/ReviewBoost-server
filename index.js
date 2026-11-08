@@ -32,6 +32,10 @@ function createApp(env) {
   app.use('/api/webhook', webhookRoutes);
   app.use('/api/reviews', reviewRoutes);
 
+  app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', demoMode: req.env.DEMO_MODE === 'true' });
+  });
+
   app.get('/', (req, res) => {
     res.send('ReviewBoost API is running');
   });

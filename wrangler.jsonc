@@ -3,6 +3,9 @@
   "name": "reviewboost-server",
   "main": "worker.mjs",
   "compatibility_date": "2026-08-04",
+  "vars": {
+    "DEMO_MODE": "true"
+  },
   "d1_databases": [
     {
       "binding": "DB",

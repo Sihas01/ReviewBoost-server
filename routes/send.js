@@ -15,6 +15,10 @@ router.post('/send-request', async (req, res) => {
     return res.status(401).json({ success: false, error: 'Unauthorized' });
   }
 
+  if (req.env.DEMO_MODE === 'true') {
+    return res.json({ success: true, messageId: `demo_${crypto.randomUUID()}` });
+  }
+
   const { businessId, customerName, customerPhone, message } = req.body;
 
   try {
