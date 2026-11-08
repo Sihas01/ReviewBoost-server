@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -10,14 +12,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@supabase/supabase-js": "^2.104.0",
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "nodemon": "^3.1.14",
     "resend": "^6.12.2",
-    "stripe": "^22.0.2",
-    "twilio": "^6.0.0"
+    "stripe": "^22.0.2"
+  },
+  "devDependencies": {
+    "wrangler": "^4.44.0"
   }
 }

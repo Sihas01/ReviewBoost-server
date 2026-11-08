@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "reviewboost-server",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-08-04",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "reviewboost-db",
+      "database_id": "4542912b-9c6b-42d3-ae27-01171324466e",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

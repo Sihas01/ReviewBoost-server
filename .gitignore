@@ -16,9 +16,17 @@ coverage
 .nyc_output
 
 # Environment variables (CRITICAL)
-.env
-.env.test
-.env.production
+.env*
+.dev.vars*
+.wrangler/
+.npmrc
+.secrets*
+secrets*.json
+credentials*.json
+*.pem
+*.key
+*.p12
+*.pfx
 
 # IDEs and editors
 .vscode/

@@ -1,49 +1,42 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { createClient } = require('@supabase/supabase-js');
 
-const app = express();
-const port = process.env.PORT || 3001;
+function createApp(env) {
+  const app = express();
 
-// Supabase Initialization
-const supabase = createClient(
-  process.env.SUPABASE_URL, 
-  process.env.SUPABASE_SERVICE_KEY
-);
+  // Middleware
+  app.use(cors());
+  app.use((req, res, next) => {
+    if (req.originalUrl === '/api/webhook/stripe') {
+      next();
+    } else {
+      bodyParser.json()(req, res, next);
+    }
+  });
 
-// Middleware
-app.use(cors());
-app.use((req, res, next) => {
-  if (req.originalUrl === '/api/webhook/stripe') {
+  // Make Workers bindings available to routes.
+  app.use((req, res, next) => {
+    req.env = env;
     next();
-  } else {
-    bodyParser.json()(req, res, next);
-  }
-});
+  });
 
-// Make supabase available to routes
-app.use((req, res, next) => {
-  req.supabase = supabase;
-  next();
-});
+  // Routes
+  const sendRoutes = require('./routes/send');
+  const billingRoutes = require('./routes/billing');
+  const webhookRoutes = require('./routes/webhooks');
+  const reviewRoutes = require('./routes/reviews');
 
-// Routes
-const sendRoutes = require('./routes/send');
-const billingRoutes = require('./routes/billing');
-const webhookRoutes = require('./routes/webhooks');
-const reviewRoutes = require('./routes/reviews');
+  app.use('/api', sendRoutes);
+  app.use('/api/billing', billingRoutes);
+  app.use('/api/webhook', webhookRoutes);
+  app.use('/api/reviews', reviewRoutes);
 
-app.use('/api', sendRoutes);
-app.use('/api/billing', billingRoutes);
-app.use('/api/webhook', webhookRoutes);
-app.use('/api/reviews', reviewRoutes);
+  app.get('/', (req, res) => {
+    res.send('ReviewBoost API is running');
+  });
 
-app.get('/', (req, res) => {
-  res.send('ReviewBoost API is running');
-});
+  return app;
+}
 
-app.listen(port, () => {
-  console.log(`🚀 Server running on port ${port}`);
-});
+module.exports = createApp;
