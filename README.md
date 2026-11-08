@@ -1,4 +1,4 @@
-﻿# ReviewBoost server
+﻿# ReviewBoost Server
 
 Express API running on Cloudflare Workers with a D1 database. The frontend is maintained separately.
 
